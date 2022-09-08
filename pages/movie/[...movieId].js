@@ -20,9 +20,17 @@ export default function MovieDetails({ details }) {
       </Head>
       <div
         className="bg-local bg-cover bg-center"
-        style={{ backgroundImage: `url(${IMAGE_URL}${details.backdrop_path || details.poster_path})`, height: "550px" }}
+        style={{
+          backgroundImage: `url(${IMAGE_URL}${
+            details.backdrop_path || details.poster_path
+          })`,
+          height: "550px",
+        }}
       >
-        <div className="bg-[#06202A] opacity-90 p-10 sm:px-20 sm:py-10 my-auto md:flex " style={{ height: "550px" }}>
+        <div
+          className="bg-[#06202A] opacity-90 p-10 sm:px-20 sm:py-10 my-auto md:flex "
+          style={{ height: "550px" }}
+        >
           <div className="sm:mx-20" style={{ minWidth: "300px" }}>
             <Image
               className="rounded-lg"
@@ -33,16 +41,20 @@ export default function MovieDetails({ details }) {
             />
           </div>
           <div className="pt-9">
-            <div className="text-3xl  truncate font-semibold">{details.title || details.original_name}</div>
+            <div className="text-3xl  truncate font-semibold">
+              {details.title || details.original_name}
+            </div>
             {details.tagline && <p>({details.tagline})</p>}
             <p className="text-sm mt-2">
-              {details.release_date} <span className="text-2xl font-semibold"> . </span>{" "}
+              {details.release_date}{" "}
+              <span className="text-2xl font-semibold"> . </span>{" "}
               {details.genres.map((gen) => {
                 return <span key={gen.id}>| {gen.name} </span>;
               })}
             </p>
             <p className="mt-3 ">
-              <span className="font-semibold text-lg">Duration :</span> {timeConvert(details.runtime)}
+              <span className="font-semibold text-lg">Duration :</span>{" "}
+              {timeConvert(details.runtime)}
             </p>
             <p className="mt-3 font-semibold text-lg">Overview </p>
             <p className="mt-2 ">{details.overview}</p>
@@ -57,7 +69,8 @@ export default function MovieDetails({ details }) {
               <span className="mt-1 "> &nbsp;{details.vote_count}</span>
             </div>
             <p className="mt-4 ">
-              <span className="font-semibold text-lg">Status :</span> <span>{details.status}</span>
+              <span className="font-semibold text-lg">Status :</span>{" "}
+              <span>{details.status}</span>
             </p>
             <p className="mt-4 ">
               <span className="font-semibold text-lg">Language :</span>{" "}
@@ -75,7 +88,9 @@ export default function MovieDetails({ details }) {
 export async function getServerSideProps(context) {
   const movieId = context.query.movieId;
   try {
-    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.API_KEY}`);
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.apiKey}`
+    );
     return {
       props: { details: res.data },
     };
